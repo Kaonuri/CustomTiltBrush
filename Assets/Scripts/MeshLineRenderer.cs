@@ -33,18 +33,18 @@ public class MeshLineRenderer : MonoBehaviour
         lineSize = width;
     }
 
-    public void AddPoint(Vector3 point)
+    public void AddPoint(Vector3 point, Vector3 forward)
     {
         if (s != Vector3.zero)
         {
-            AddLine(ml, MakeQuad(s, point, lineSize, firstQuad));
+            AddLine(ml, MakeQuad(s, point, forward, lineSize, firstQuad));
             firstQuad = false;
         }
 
         s = point;
     }
 
-    Vector3[] MakeQuad(Vector3 s, Vector3 e, float w, bool all)
+    Vector3[] MakeQuad(Vector3 s, Vector3 e, Vector3 f, float w, bool all)
     {
         w = w / 2;
 
@@ -64,15 +64,15 @@ public class MeshLineRenderer : MonoBehaviour
 
         if (all)
         {
-            q[0] = transform.InverseTransformPoint(s + l * w);
-            q[1] = transform.InverseTransformPoint(s + l * -w);
-            q[2] = transform.InverseTransformPoint(e + l * w);
-            q[3] = transform.InverseTransformPoint(e + l * -w);
+            q[0] = transform.InverseTransformPoint(s + f * w);
+            q[1] = transform.InverseTransformPoint(s + f * -w);
+            q[2] = transform.InverseTransformPoint(e + f * w);
+            q[3] = transform.InverseTransformPoint(e + f * -w);
         }
         else
         {
-            q[0] = transform.InverseTransformPoint(s + l * w);
-            q[1] = transform.InverseTransformPoint(s + l * -w);
+            q[0] = transform.InverseTransformPoint(s + f * w);
+            q[1] = transform.InverseTransformPoint(s + f * -w);
         }
         return q;
     }
